@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Backend - Başlatma Rehberi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .endpoint {
+            background: #e7f3ff;
+            border-left: 3px solid #2196F3;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .curl-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 E-Commerce Backend - Başlatma Rehberi</h1>
+
+        <div class="success">
+            <strong>✅ Hoşgeldiniz!</strong> Bu rehber, E-Commerce Backend uygulamasını çalıştırmanıza yardımcı olacaktır.
+        </div>
+
+        <h2>📋 Gereksinimler</h2>
+        <ul>
+            <li>✅ Java 17 veya üzeri</li>
+            <li>✅ Maven 3.9+ (opsiyonel, JAR zaten derlenmişti)</li>
+            <li>✅ Port 8080 boş (sunucu bu portu kullanır)</li>
+        </ul>
+
+        <h2>🚀 Adım 1: JAR Dosyasını Çalıştır</h2>
+        <div class="step">
+            <p>Proje klasöründe aşağıdaki komutu çalıştırın:</p>
+            <div class="code">
+cd C:\Users\user\Desktop\proje\ecommerce-backend
+java -jar target/ecommerce-backend-0.0.1-SNAPSHOT.jar
+            </div>
+            <p><strong>Beklenen Çıktı:</strong></p>
+            <div class="code">
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_|\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v3.2.5)
+
+2026-02-16T23:50:00.000+03:00  INFO ... ecommerce-backend : Started Application in 8.234 seconds (JVM running for 8.456)
+            </div>
+        </div>
+
+        <h2>✅ Adım 2: Sunucunun Çalıştığını Doğrula</h2>
+        <div class="step">
+            <p>Yeni bir terminal açıp aşağıdaki komutu çalıştırın:</p>
+            <div class="code">
+curl http://localhost:8080/api/auth/test
+            </div>
+            <p><strong>Beklenen Yanıt:</strong></p>
+            <div class="code">
+{"message":"Auth endpoints are working!"}
+            </div>
+        </div>
+
+        <h2>👤 Adım 3: Kullanıcı Kaydı Yap</h2>
+        <div class="step">
+            <p>Yeni bir kullanıcı kaydı yapın:</p>
+            <div class="curl-example">
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "ahmet_user",
+    "email": "ahmet@example.com",
+    "password": "password123"
+  }'
+            </div>
+            <p><strong>Başarılı Yanıt:</strong></p>
+            <div class="code">
+{"message":"User registered successfully!"}
+            </div>
+        </div>
+
+        <h2>🔑 Adım 4: Giriş Yap ve Token Al</h2>
+        <div class="step">
+            <p>Kullanıcı girişi yapın ve JWT token alın:</p>
+            <div class="curl-example">
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "ahmet_user",
+    "password": "password123"
+  }'
+            </div>
+            <p><strong>Yanıt (Token Örneği):</strong></p>
+            <div class="code">
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "type": "Bearer",
+  "username": "ahmet_user",
+  "email": "ahmet@example.com",
+  "role": "ROLE_USER"
+}
+            </div>
+            <p><strong>⚠️ Önemli:</strong> Token'ı sonraki isteklerde kullanacağız. <code>token</code> değerini kopyalayın.</p>
+        </div>
+
+        <h2>📦 Adım 5: Ürünleri Listele</h2>
+        <div class="step">
+            <p>Token'ı kullanarak ürünleri listeleyin:</p>
+            <div class="curl-example">
+curl -X GET "http://localhost:8080/api/products?page=0&size=10" \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+            </div>
+            <p><strong>Not:</strong> YOUR_TOKEN_HERE yerine Adım 4'te aldığınız token'ı yapıştırın.</p>
+        </div>
+
+        <h2>🏪 API Endpoints</h2>
+
+        <h3>Authentication</h3>
+        <div class="endpoint">POST /api/auth/register - Kullanıcı kaydı</div>
+        <div class="endpoint">POST /api/auth/login - Giriş yapıp token al</div>
+        <div class="endpoint">GET /api/auth/test - Sunucu test et</div>
+
+        <h3>Products (Ürünler)</h3>
+        <div class="endpoint">GET /api/products - Tüm ürünleri listele</div>
+        <div class="endpoint">GET /api/products/{id} - Ürün detayı</div>
+        <div class="endpoint">GET /api/products/search?keyword=... - Ürün ara</div>
+        <div class="endpoint">POST /api/products - Yeni ürün oluştur (Admin)</div>
+
+        <h3>Categories (Kategoriler)</h3>
+        <div class="endpoint">GET /api/categories - Kategorileri listele</div>
+        <div class="endpoint">POST /api/categories - Kategori oluştur (Admin)</div>
+
+        <h3>Cart (Sepet)</h3>
+        <div class="endpoint">GET /api/cart/{userId} - Sepeti getir</div>
+        <div class="endpoint">POST /api/cart/{userId}/items - Sepete ürün ekle</div>
+
+        <h3>Orders (Siparişler)</h3>
+        <div class="endpoint">GET /api/orders/user/{userId} - Siparişleri listele</div>
+        <div class="endpoint">POST /api/orders/user/{userId} - Sipariş oluştur</div>
+
+        <h2>📊 Postman ile Test Etme</h2>
+        <div class="step">
+            <ol>
+                <li><a href="Postman_Collection.json" download>Postman_Collection.json</a> dosyasını indirin</li>
+                <li>Postman uygulamasını açın</li>
+                <li>File → Import → İndirilen JSON dosyasını seçin</li>
+                <li>Tüm endpoint'ler hazırlanmış olarak gelecektir</li>
+                <li>İstediğiniz endpoint'i seçip "Send" butonuna tıklayın</li>
+            </ol>
+        </div>
+
+        <h2>📁 Dokümantasyon Dosyaları</h2>
+        <div class="step">
+            <ul>
+                <li><strong>README_TR.md</strong> - Türkçe başlangıç rehberi</li>
+                <li><strong>API_DOCUMENTATION.md</strong> - Detaylı API dokümantasyonu</li>
+                <li><strong>PROJECT_SUMMARY.md</strong> - Proje özeti</li>
+                <li><strong>PROJE_TAMAMLANDI.md</strong> - Tamamlanma raporu</li>
+                <li><strong>Postman_Collection.json</strong> - Postman import dosyası</li>
+            </ul>
+        </div>
+
+        <h2>🐛 Sorun Giderme</h2>
+
+        <div class="warning">
+            <strong>Sorun:</strong> "Port 8080 already in use" hatası<br>
+            <strong>Çözüm:</strong> application.properties dosyasında server.port'u değiştirin veya port 8080'i kullanan programı kapatın
+        </div>
+
+        <div class="warning">
+            <strong>Sorun:</strong> "Connection refused" hatası<br>
+            <strong>Çözüm:</strong> Sunucunun çalıştığından emin olun. Terminal'de Spring Boot başlangıç mesajlarını kontrol edin
+        </div>
+
+        <div class="warning">
+            <strong>Sorun:</strong> 404 hatası alıyor<br>
+            <strong>Çözüm:</strong> Endpoint URL'sinin doğru olduğunu kontrol edin (örn: /api/auth/test)
+        </div>
+
+        <h2>✨ İyi Bilmeniz Gerekenler</h2>
+        <ul>
+            <li>JWT token 24 saat geçerlidir</li>
+            <li>Admin işlemleri (ürün/kategori oluşturma) ROLE_ADMIN gerektir</li>
+            <li>Tüm request'ler JSON format'ında olmalıdır</li>
+            <li>Autentike isteklerde "Authorization: Bearer TOKEN" header'ı gerekli</li>
+            <li>Veritabanı H2 In-Memory olarak çalışır (veriler kapanışta silinir)</li>
+        </ul>
+
+        <div class="success">
+            <strong>🎉 Başarılar!</strong> Sorularınız varsa API_DOCUMENTATION.md dosyasını okuyun.
+        </div>
+    </div>
+</body>
+</html>
+
